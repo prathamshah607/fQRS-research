@@ -103,13 +103,40 @@ class CSIROPreprocessor:
     def make_cv_splits(self, df_train: pd.DataFrame, n_splits: int = 5, seed: int = 42):
         print("MAKING CV SPLITS...")
         df = df_train.copy()
-        doy = pd.to_datetime(df["Sampling_Date"]).dt.dayofyear
+        
+        # Extract base sample IDs (remove target suffix)
+        df["base_id"] = df["sample_id"].str.split("__").str[0]
+        
+        # Get unique samples only
+        unique_samples = df.drop_duplicates(subset=["base_id"]).copy()
+        
+        # Stratify by State + Season
+        doy = pd.to_datetime(unique_samples["Sampling_Date"]).dt.dayofyear
         season_bucket = pd.qcut(doy, q=4, labels=False, duplicates="drop")
-        df["strata"] = df["State"].astype(str) + "_" + season_bucket.astype(str)
-
+        unique_samples["strata"] = (unique_samples["State"].astype(str) + "_" + 
+                                    season_bucket.astype(str))
+        
+        # Split at SAMPLE level
         skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
         splits = []
-        for fold, (tr_idx, va_idx) in enumerate(skf.split(df, df["strata"])):
+        
+        for fold, (sample_tr_idx, sample_va_idx) in enumerate(
+            skf.split(unique_samples, unique_samples["strata"])
+        ):
+            # Get base_ids for this fold
+            train_base_ids = unique_samples.iloc[sample_tr_idx]["base_id"].values
+            val_base_ids = unique_samples.iloc[sample_va_idx]["base_id"].values
+            
+            # Expand to ALL rows with these base_ids
+            train_row_mask = df["base_id"].isin(train_base_ids)
+            val_row_mask = df["base_id"].isin(val_base_ids)
+            
+            tr_idx = np.where(train_row_mask)[0]
+            va_idx = np.where(val_row_mask)[0]
+            
+            # Verify no overlap
+            assert len(set(train_base_ids) & set(val_base_ids)) == 0, "Leak detected!"
+            
             splits.append({
                 "fold": fold,
                 "train_idx": tr_idx,
@@ -117,8 +144,11 @@ class CSIROPreprocessor:
                 "train_size": len(tr_idx),
                 "val_size": len(va_idx),
             })
-            print(f"  fold {fold}: train={len(tr_idx)}, val={len(va_idx)}")
+            print(f"  fold {fold}: train={len(tr_idx)} rows ({len(train_base_ids)} samples), "
+                f"val={len(va_idx)} rows ({len(val_base_ids)} samples)")
+        
         self.cv_splits = splits
+
 
     def save(self, path: str):
         state = {
