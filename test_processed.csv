@@ -1,6 +1,0 @@
-sample_id,image_path,target_name,ndvi_norm,height_norm,date_sin,date_cos,date_sin2,date_cos2,state_id,species_id,ndvi_height_interaction,seasonal_ndvi
-ID1001187975__Dry_Clover_g,test/ID1001187975.jpg,Dry_Clover_g,0.5,0.0,0.0,1.0,0.0,1.0,0,0,0.0,0.0
-ID1001187975__Dry_Dead_g,test/ID1001187975.jpg,Dry_Dead_g,0.5,0.0,0.0,1.0,0.0,1.0,0,0,0.0,0.0
-ID1001187975__Dry_Green_g,test/ID1001187975.jpg,Dry_Green_g,0.5,0.0,0.0,1.0,0.0,1.0,0,0,0.0,0.0
-ID1001187975__Dry_Total_g,test/ID1001187975.jpg,Dry_Total_g,0.5,0.0,0.0,1.0,0.0,1.0,0,0,0.0,0.0
-ID1001187975__GDM_g,test/ID1001187975.jpg,GDM_g,0.5,0.0,0.0,1.0,0.0,1.0,0,0,0.0,0.0

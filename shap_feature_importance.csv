@@ -1,0 +1,31 @@
+Feature,Mean |SHAP|,Direction
+without BBB,0.06488874835629163,↓ risk
+Q wave anterior,0.030269245570051333,↓ risk
+LAD disease,0.013816805557705581,↓ risk
+log_QRS width (ms),0.01328172256167853,↓ risk
+number of coils on defib electrode,0.010211982834875167,↑ risk
+type of arrhythmia at implantation,0.007851588087276267,↓ risk
+QRS width (ms),0.007681128298042819,↑ risk
+age_sq,0.00647667298670964,↓ risk
+HR /',0.006373285083686835,↑ risk
+hf_composite,0.006063606166671664,↑ risk
+QRS_x_LVEF,0.0059518934156789,↓ risk
+ecg_burden,0.005833267809643028,↑ risk
+log_HR /',0.005732977779505187,↑ risk
+age (at implant),0.005658069636579801,↑ risk
+BMI,0.0042586887431819865,↑ risk
+number of MI,0.004173058550058649,↓ risk
+QTd (ms),0.003571745713761331,↓ risk
+QRS_per_LVEF,0.003437944056663332,↑ risk
+age_x_risk,0.003098672997865994,↑ risk
+age_x_LVEF,0.003033569044110417,↑ risk
+LVEF (%),0.00297848093293411,↑ risk
+QT (ms),0.002896901525881116,↑ risk
+log_QT (ms),0.0027880013793281384,↓ risk
+log_LVEDD (cm),0.002781020913494252,↓ risk
+LVEDD (cm),0.002633894193747836,↑ risk
+krea,0.0023352263607069536,↓ risk
+QTd_ratio,0.0022898413333876625,↓ risk
+log_krea,0.002170255748209591,↓ risk
+QTc (ms),0.0019986450549464903,↑ risk
+log_QTc (ms),0.0015933029854534272,↑ risk
